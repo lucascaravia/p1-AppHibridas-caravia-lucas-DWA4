@@ -3,10 +3,10 @@ import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
     name: String,
-    email: String,
-    password: String
+    especialidad: String,
+    
 })
 
-const User = mongoose.model('User', userSchema);
+const barber = mongoose.model('Barber', userSchema);
 
-export default User
+export default barber
