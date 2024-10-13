@@ -25,3 +25,26 @@ routerAPI(app);
 app.listen( 3000, () =>{
     console.log('Servidor escuchando en el puerto ' + port);
 })
+
+
+
+// Utilidad para verificar el token
+function validarToken(  req, res, next ){
+    // El token viaja en el header
+    let token = req.headers.authorization;
+    // Chequeo si se paso el token
+    if( !token){
+        return res.status(401).json({ msg: 'No se paso el token'})
+    }
+     // Solo en In
+token = token.split(' ')[1];
+
+    jwt.verify(token, clave, (error, decoded) => {
+        if( error) {
+            return res.status(403).json({ msg: 'Token invalido'})
+        }
+        // Retorno el id del usuario
+        req.userId = decoded.userId;
+        next();
+    })
+}
